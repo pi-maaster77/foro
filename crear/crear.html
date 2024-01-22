@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>un blog</title>
+    <link rel="stylesheet" href="http://192.168.2.128:3000/style">
+</head>
+<body>
+    <header id="inicio">
+        <h1>Mi Blog</h1>
+    </header>
+    <article>
+        <h2>Crear Artículo</h2>
+        <form action="/crear" method="post">
+          <input type="text" id="titulo" name="titulo" placeholder="titulo" required>
+          <textarea id="contenido" name="contenido" placeholder="contenido" required></textarea>
+          <input type="text" id="imagen" name="imagen" placeholder="imagen">
+      
+          <button type="submit">Crear Artículo</button>
+        </form>
+    
+    </form>
+    </article>
+    <footer>
+        <nav>
+            <a href="" onclick="alert('contactame esta')">¡Contactenos!</a>
+            <a href="http://192.168.2.128:3000/#inicio">volver al inicio</a>
+        </nav>
+        <p>CoppyWrite 2027</p>
+    </footer>
+    <script>
+        function validarEnlace() {
+          var inputEnlace = document.getElementById('imagen').value;
+          var expresionRegularEnlace = /^(ftp|http|https):\/\/[^ "]+$/;
+    
+          if (expresionRegularEnlace.test(inputEnlace)) {
+            alert('Enlace válido.');
+          } else {
+            alert('Por favor, ingresa un enlace válido.');
+          }
+        }
+      </script>
+</body>
+</html>
