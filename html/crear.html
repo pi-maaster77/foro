@@ -7,20 +7,26 @@
     <link rel="stylesheet" href="http://192.168.2.128:3000/style">
 </head>
 <body>
-    <header id="inicio">
-        <h1>Mi Blog</h1>
-    </header>
+  <header id="inicio">
+    <nav id= "nav">
+
+    </nav>
+    <h1>
+        Mi Blog
+    </h1>
+</header>
     <article>
         <h2>Crear Artículo</h2>
-        <form action="/crear" method="post">
+        <p>
+        <form action="/crear" method="post" id="crear">
           <input type="text" id="titulo" name="titulo" placeholder="titulo" required>
           <textarea id="contenido" name="contenido" placeholder="contenido" required></textarea>
-          <input type="text" id="imagen" name="imagen" placeholder="imagen">
+          <input type="text" id="imagen" name="imagen" placeholder="imagen"><hr>
           
-          <>
           <button type="submit">Crear Artículo</button>
+         
         </form>
-    
+        </p>
     </form>
     </article>
     <footer>
@@ -30,17 +36,37 @@
         </nav>
         <p>CoppyWrite 2027</p>
     </footer>
+    <script src="/login"></script>
     <script>
-        function validarEnlace() {
-          var inputEnlace = document.getElementById('imagen').value;
-          var expresionRegularEnlace = /^(ftp|http|https):\/\/[^ "]+$/;
-    
-          if (expresionRegularEnlace.test(inputEnlace)) {
-            alert('Enlace válido.');
-          } else {
-            alert('Por favor, ingresa un enlace válido.');
-          }
-        }
-      </script>
+      document.getElementById('crear').addEventListener('submit', function (event) {
+        event.preventDefault();          
+        respuesta = {
+          titulo : document.getElementById('titulo').value,
+          contenido : document.getElementById('contenido').value,
+          imagen : document.getElementById('contenido').value,
+          autor : localStorage.getItem("username")
+        };
+        console.log(respuesta)
+        // Envía la respuesta al servidor (puedes ajustar esto según tu necesidad)
+          fetch("/crear", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(respuesta)
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Respuesta del servidor:', data);
+              // Puedes realizar acciones adicionales con la respuesta del servidor aquí
+            }).then(data => {
+                    // Redirige a la URL especificada en la respuesta en caso de éxito
+                    window.location.href = "/";
+                })
+            .catch(error => {
+              console.error('Error al enviar la respuesta:', error);
+            });
+      });
+    </script>
 </body>
 </html>

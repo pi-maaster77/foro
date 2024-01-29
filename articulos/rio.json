@@ -2,5 +2,6 @@
     "titulo"    : "rio",
     "contenido" : "muy lindo para la foto. pero no es recomendable. no vaya a ser que venga un carpincho y te tire la compu al rio. chau aguinaldo",
     "imagen"    : "https://imgs.search.brave.com/Oqgf7j9yoco5VmHdpVaCY1Ung2Be_WuE4ioDLicP7jo/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9uZW9h/dHRhY2suY29tL3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE2LzA3/L0ltJUMzJUExZ2Vu/ZXMtR3JhdHVpdGFz/LSVFMiU5RSVBOC0y/MC1CYW5jb3MtcGFy/YS11c28tY29tZXJj/aWFsMTYuanBn",
-    "likes "    : 0
+    "likes "    : 0,
+    "autor"     : "pi"
 }

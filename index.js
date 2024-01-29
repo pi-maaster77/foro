@@ -1,10 +1,12 @@
 // importar librerias
 
-const express = require("express");
-const path = require("path");
-const { readdir, writeFile } = require('fs/promises');
+const express               = require("express");
+const { readdir, writeFile }= require('fs/promises');
+const path  = require("path");
 const mysql = require('mysql2');
+const session = require("express-session")
 require("dotenv/config");
+
 
 // definir constantes 
 const ip            = process.env.ip                            ;
@@ -25,6 +27,12 @@ const connection = mysql.createConnection({
 
 
 // configurar express
+
+app.use(session({
+    secret: 'foroforeandofosforito',
+    resave: false,
+    saveUninitialized: true,
+}));
 app.use(express.urlencoded({ extended: true }))                 ;
 app.use(express.json())                                         ;
 
@@ -65,26 +73,27 @@ app.get("/data", async (req,res) => {
 app.get("/crear", (req,res) => {
     res.sendFile(path.resolve("html/crear.html"))
 });
+app.get("/login", (req,res) => {
+    res.sendFile(path.resolve("login.js"))
+});
 app.post("/crear", async (req, res) => {
-    const { titulo, contenido, imagen } = req.body;
-    const tituloUnico = titulo.replace(/\s+/g, '_').toLowerCase();
+    const respuesta = req.body;
+    console.log(respuesta)
+    const tituloUnico = respuesta.titulo.replace(/\s+/g, '_').toLowerCase();
     const nuevoArticulo = {
-        titulo,
-        contenido,
-        imagen: imagen || "" 
+        titulo: respuesta.titulo,
+        contenido: respuesta.contenido,
+        autor: respuesta.autor || "anonimo",
+        imagen: respuesta.imagen || "" 
     };
+    
     const nombreArchivo = `${tituloUnico}.json`;
     try {
         await writeFile(`${directorio}/${nombreArchivo}`, JSON.stringify(nuevoArticulo));    
-        res.set({
-            "content-type" : "text/html; charset=utf-8"
-        });
-        res.send(`
-        ¡articulo creado con exito!
-        <a href=http://${ip+':'+port}>volver al inicio</a>`);
+        res.json({ redireccion: '/', articulo: nuevoArticulo });
     } catch (error) {
         console.error('Error al escribir el archivo JSON:', error);
-        res.status(500).send("Error al crear el artículo");
+        res.status(500).json({message: "Error al crear el artículo"});
     }
 });
 
@@ -115,9 +124,7 @@ app.post("/registrar", async (req, res) => {
 
 
     connection.query(`SELECT * FROM users WHERE name = ?`, user, (error, results, fields) => {
-        if (results.length > 0) {
-            const usuarioEncontrado = results[0];
-            
+        if (results.length > 0) {    
             res.status(401).json({ mensaje: "el usuario ya existe"});
         } else {
             connection.query(`INSERT INTO users(name,passwd) VALUES (?,?)`, usuario, (error, results,fields) =>  {
@@ -127,9 +134,7 @@ app.post("/registrar", async (req, res) => {
                 } else {
                     res.status(200).json({redireccion: "/", mensaje: 'Usuario creado con éxito' });
                 }
-    
-    })
-            
+    })      
         }
         if (error) throw error;
     });
@@ -137,5 +142,5 @@ app.post("/registrar", async (req, res) => {
 
 
 app.listen(port, () => {
-    console.log("Iniciando servidor...");
+    console.log(`iniciando servidor en http://${ip}:${port}`);
 });

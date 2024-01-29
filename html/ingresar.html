@@ -31,6 +31,12 @@
         <p>CoppyWrite 2027</p>
     </footer>
     <script>
+        function guardarUsuario(nombreUsuario) {
+            
+            // Guarda el nombre de usuario en una cookie que expira en 30 días
+            localStorage.setItem('username', nombreUsuario)
+        }
+
         document.getElementById('ingresar').addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -46,6 +52,7 @@
             })
                 .then(response => {
                     if (response.ok) {
+                        guardarUsuario(user)
                         return response.json();
                     } else {
                         throw new Error('Error al procesar el formulario');
@@ -53,7 +60,7 @@
                 })
                 .then(data => {
                     // Redirige a la URL especificada en la respuesta en caso de éxito
-                    window.location.href = data.redireccion;
+                    window.location.href = "/";
                 })
                 .catch(error => {
                     // Muestra un mensaje de error en el div
