@@ -1,32 +1,33 @@
-obtener_datos = apiUrl => {
-    const escribir = document.getElementById("escribir")
-    fetch(apiUrl+"/data")
-    .then(response => response.json())
-    .then(datos => {
-        datos.art.forEach(articulo => {
-            fetch(apiUrl+"/articulos/"+articulo)
-            .then(response => response.json())
-            .then(data =>{
-            let parcial = 
-            `<article>
+const obtenerDatos = async (apiUrl) => {
+    try {
+      const escribir = document.getElementById("escribir");
+      const response = await fetch(apiUrl + "/data");
+      const datos = await response.json();
+  
+      for (const articulo of datos.art) {
+        const articuloResponse = await fetch(apiUrl + "/articulos/" + articulo);
+        const data = await articuloResponse.json();
+  
+        const parcial = `
+          <article>
             <h2>${data.titulo}</h2>
-            <p>${data.contenido}</p>`
-            if(data.imagen != ""){
-            parcial  += `<img src="${data.imagen}">`
-            }
-            parcial += `</article>`
-            escribir.innerHTML += parcial
-        })
-        });
-
-    })
-    .catch(error => {
-        console.error('Error al obtener el objeto:', error);
-        return error
-    });
-}
-
-obtener_datos("http://192.168.2.128:3000")
+            <p>${data.contenido}</p>
+            ${data.imagen ? `<img src="${data.imagen}">` : ""}
+            <input type="checkbox" id="like" name="opciones" value="like">
+          </article`;
+  
+        escribir.innerHTML += parcial;
+      }
+    } catch (error) {
+      console.error('Error al obtener el objeto:', error);
+      throw error; // Relanza el error para que pueda ser manejado más arriba si es necesario
+    }
+  };
+  
+  // Llamada a la función
+obtenerDatos("http://192.168.2.128:3000")
+    .then(() => console.log("Datos obtenidos exitosamente"))
+    .catch((error) => console.error("Error al obtener datos:", error));
 crear = () => {
     window.location.href = "http://192.168.2.128:3000/crear"
 }

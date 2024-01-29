@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>un blog</title>
+    <link rel="stylesheet" href="http://192.168.2.128:3000/style">
+</head>
+<body>
+    <header id="inicio">
+        <h1>Mi Blog</h1>
+    </header>
+    <article>
+        <h2>Ingresar</h2>
+        <p id="mensajeError" style="color: red;"></p>
+        <form action="/ingresar" method="post" id = "ingresar">
+          <p><input type="text"        id="user"   name="user"     placeholder="usuario"       required></p>
+          <p><input type="password"    id="passwd" name="passwd"   placeholder="contraseña"    required></p>
+          <p><button type="submit">ingresar</button></p>
+        </form>
+        <p>¿todavia no tienes cuenta? haz click <a href="http://192.168.2.128:3000/registro">aqui</a> para crear una</p>
+        
+    
+    </form>
+    </article>
+    <footer>
+        <nav>
+            <a href="" onclick="alert('contactame esta')">¡Contactenos!</a>
+            <a href="http://192.168.2.128:3000/#inicio">volver al inicio</a>
+        </nav>
+        <p>CoppyWrite 2027</p>
+    </footer>
+    <script>
+        document.getElementById('ingresar').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const user = document.getElementById('user').value;
+            const passwd = document.getElementById('passwd').value;
+
+            fetch('/ingresar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user, passwd })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error al procesar el formulario');
+                    }
+                })
+                .then(data => {
+                    // Redirige a la URL especificada en la respuesta en caso de éxito
+                    window.location.href = data.redireccion;
+                })
+                .catch(error => {
+                    // Muestra un mensaje de error en el div
+                    document.getElementById('mensajeError').innerText = 'Error: Nombre de usuario o contraseña incorrectos';
+                });
+        });
+    </script>
+</body>
+</html>

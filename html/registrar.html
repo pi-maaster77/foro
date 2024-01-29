@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>un blog</title>
+    <link rel="stylesheet" href="http://192.168.2.128:3000/style">
+</head>
+<body>
+    <header id="inicio">
+        <h1>Mi Blog</h1>
+    </header>
+    <article>
+        <h2>Registrate</h2>
+        <p id="mensajeError" style="color: red;"></p>
+        <form action="/registrar" method="post" id = "registrar">
+          <p><input type="text"        id="user"   name="user"     placeholder="usuario"       required></p>
+          <p><input type="password"    id="passwd" name="passwd"   placeholder="contraseña"    required></p>
+          <p><input type="password"    id="cpasswd" name="cpasswd"   placeholder="confirmar contraseña"    required></p>
+          <p><button type="submit">crear cuenta</button></p>
+        </form>
+        <p>¿ya tienes cuenta? haz click <a href="http://192.168.2.128:3000/ingresar">aqui</a> para iniciar sesion</p>
+    
+    </form>
+    </article>
+    <footer>
+        <nav>
+            <a href="" onclick="alert('contactame esta')">¡Contactenos!</a>
+            <a href="http://192.168.2.128:3000/#inicio">volver al inicio</a>
+        </nav>
+        <p>CoppyWrite 2027</p>
+    </footer>
+    <script>
+
+        document.getElementById('registrar').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const user = document.getElementById('user').value;
+            const passwd = document.getElementById('passwd').value;
+            const cpasswd = document.getElementById("cpasswd").value
+            if(cpasswd != passwd){
+                document.getElementById("mensajeError").innerHTML = "Error al crear la cuenta: las contraseñas no coinciden"
+            }
+            else 
+            {
+
+            fetch('/registrar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user, passwd })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Error al crear la cuenta');
+                    }
+                })
+                .then(data => {
+                    // Redirige a la URL especificada en la respuesta en caso de éxito
+                    window.location.href = data.redireccion;
+                })
+                .catch(error => {
+                    // Muestra un mensaje de error en el div
+                    document.getElementById('mensajeError').innerText = 'Error: Nombre de usuario o contraseña incorrectos';
+                });
+        }});
+    </script>
+</body>
+</html>
