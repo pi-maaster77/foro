@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>un blog</title>
-    <link rel="stylesheet" href="http://192.168.2.128:3000/style">
+    <link rel="stylesheet" href="style">
 </head>
 <body>
     <header id="inicio">
@@ -18,7 +18,7 @@
           <p><input type="password"    id="passwd" name="passwd"   placeholder="contraseña"    required></p>
           <p><button type="submit">ingresar</button></p>
         </form>
-        <p>¿todavia no tienes cuenta? haz click <a href="http://192.168.2.128:3000/registro">aqui</a> para crear una</p>
+        <p>¿todavia no tienes cuenta? haz click <a href="registrar">aqui</a> para crear una</p>
         
     
     </form>
@@ -26,14 +26,12 @@
     <footer>
         <nav>
             <a href="" onclick="alert('contactame esta')">¡Contactenos!</a>
-            <a href="http://192.168.2.128:3000/#inicio">volver al inicio</a>
+            <a href="/">volver al inicio</a>
         </nav>
         <p>CoppyWrite 2027</p>
     </footer>
     <script>
         function guardarUsuario(nombreUsuario) {
-            
-            // Guarda el nombre de usuario en una cookie que expira en 30 días
             localStorage.setItem('username', nombreUsuario)
         }
 
@@ -58,10 +56,10 @@
                         throw new Error('Error al procesar el formulario');
                     }
                 })
-                .then(data => {
-                    // Redirige a la URL especificada en la respuesta en caso de éxito
-                    window.location.href = "/";
-                })
+                .then(data =>{
+                    if(data.redireccion){ 
+                window.location.href = "/"
+            }})
                 .catch(error => {
                     // Muestra un mensaje de error en el div
                     document.getElementById('mensajeError').innerText = 'Error: Nombre de usuario o contraseña incorrectos';

@@ -1,35 +1,83 @@
-const obtenerDatos = async (apiUrl) => {
-    try {
-      const escribir = document.getElementById("escribir");
-      const response = await fetch(apiUrl+"/data");
-      const datos = await response.json();
-  
-      for (const articulo of datos.art) {
-        const articuloResponse = await fetch(apiUrl + "/articulos/" + articulo);
-        const data = await articuloResponse.json();
-  
-        const parcial = `
-          <article>
-            <p>${data.autor}</p>
-            <h2>${data.titulo}</h2>
-            <p>${data.contenido}</p>
-            ${data.imagen ? `<img src="${data.imagen}">` : ""}
-            <input type="checkbox" id="like" name="opciones" value="like">
-          </article`;
-  
-        escribir.innerHTML += parcial;
-      }
-    } catch (error) {
-      console.error('Error al obtener el objeto:', error);
-      throw error; // Relanza el error para que pueda ser manejado más arriba si es necesario
-    }
-  };
-  // Llamada a la función
-obtenerDatos("http://192.168.2.128:3000")
-    .then(() => console.log("Datos obtenidos exitosamente"))
-    .catch((error) => console.error("Error al obtener datos:", error));
+const escribir = document.getElementById("escribir");
+const nombre = localStorage.getItem("username") || "";
 
-crear = () => {
-    window.location.href = "http://192.168.2.128:3000/crear"
+// Función para obtener los likes del usuario desde el servidor
+async function obtenerLikesUsuario() {
+  try {
+    const response = await fetch(`/likes/${nombre}`);
+    if (response.ok) {
+      const datos = await response.json();
+      return datos.likes || [];
+    } else {
+      console.error(`Error al obtener likes del usuario desde el servidor: ${response.status}`);
+      return [];
+    }
+  } catch (error) {
+    console.error('Error al obtener likes del usuario desde el servidor:', error);
+    return [];
+  }
 }
 
+// Función para agregar un artículo al DOM
+function agregarArticulo(articulo) {
+  escribir.innerHTML += `<article>
+      <p>${articulo.autor}</p>
+      <h2>${articulo.nombre}</h2>
+      <p>${articulo.contenido}</p>
+      ${articulo.imagenes ? `<img src="${articulo.imagenes}">` : ""}
+      <div class="likes">
+      <input type="checkbox" class= "custom-checkbox" id="likes${articulo.id}" name="opciones" value="like" data-articulo-id="${articulo.id}" ${nombre === "" ? "disabled" : ""} ${articulo.liked ? "checked" : ""}>
+      <label for="likes${articulo.id}" class="checkbox-label"></label> ${articulo.likes}</div>
+      
+    </article>`;
+}
+
+// Obtener datos y mostrar artículos
+async function mostrarArticulos() {
+  try {
+    const response = await fetch(window.location.href + "data");
+    if (!response.ok) {
+      throw new Error(`Error al obtener datos del servidor: ${response.status}`);
+    }
+
+    const data = await response.json();
+    data.liked = await obtenerLikesUsuario();
+    
+    for (const articulo of data.articulos) {
+      articulo.liked = data.liked.includes(articulo.id.toString());
+      agregarArticulo(articulo);
+    }
+  } catch (error) {
+    console.error('Error al obtener y mostrar artículos:', error);
+  }
+}
+
+// Llamada a la función para mostrar artículos
+mostrarArticulos();
+
+// Agrega un solo manejador de eventos a #escribir para delegar eventos de cambio
+escribir.addEventListener('change', async (event) => {
+  if (event.target.type === 'checkbox') {
+    const articuloId = event.target.dataset.articuloId;
+    
+    // Realiza la solicitud POST para actualizar la base de datos
+    try {
+      const response = await fetch("/likes", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: nombre,
+          id: articuloId
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error al enviar la respuesta: ${response.status}`);
+      }
+    } catch (error) {
+      console.error('Error al enviar la respuesta:', error);
+    }
+  }
+});

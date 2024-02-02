@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>un blog</title>
-    <link rel="stylesheet" href="http://192.168.2.128:3000/style">
+    <link rel="stylesheet" href="style">
 </head>
 <body>
   <header id="inicio">
@@ -32,7 +32,7 @@
     <footer>
         <nav>
             <a href="" onclick="alert('contactame esta')">¡Contactenos!</a>
-            <a href="http://192.168.2.128:3000/#inicio">volver al inicio</a>
+            <a href="/#inicio">volver al inicio</a>
         </nav>
         <p>CoppyWrite 2027</p>
     </footer>
@@ -41,31 +41,21 @@
       document.getElementById('crear').addEventListener('submit', function (event) {
         event.preventDefault();          
         respuesta = {
-          titulo : document.getElementById('titulo').value,
+          nombre : document.getElementById('titulo').value,
           contenido : document.getElementById('contenido').value,
-          imagen : document.getElementById('contenido').value,
+          imagenes : document.getElementById('imagen').value,
           autor : localStorage.getItem("username")
         };
-        console.log(respuesta)
-        // Envía la respuesta al servidor (puedes ajustar esto según tu necesidad)
-          fetch("/crear", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(respuesta)
+        fetch("/crear", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(respuesta)
           })
-            .then(response => response.json())
-            .then(data => {
-              console.log('Respuesta del servidor:', data);
-              // Puedes realizar acciones adicionales con la respuesta del servidor aquí
-            }).then(data => {
-                    // Redirige a la URL especificada en la respuesta en caso de éxito
-                    window.location.href = "/";
-                })
-            .catch(error => {
-              console.error('Error al enviar la respuesta:', error);
-            });
+          .then(response => response.json())
+          .then(window.location.href = "/")
+          .catch(error => console.error('Error al enviar la respuesta:', error));
       });
     </script>
 </body>

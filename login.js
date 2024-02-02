@@ -1,10 +1,10 @@
-nombre = localStorage.getItem("username") || "", 
-  
-console.log(nombre)
+nombre = localStorage.getItem("username") || "",
 sesion = (usuario) => {
 nav = document.getElementById("nav")
     if(usuario.length > 0){
-        nav.innerHTML = `<a onclick="logout()">${usuario}</a><hr>`
+        nav.innerHTML = 
+        `<a>${usuario}</a><hr>
+        <button onclick="logout()">cerrar sesion</button>`
     }
     else {
         nav.innerHTML = 

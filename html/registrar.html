@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>un blog</title>
-    <link rel="stylesheet" href="http://192.168.2.128:3000/style">
+    <link rel="stylesheet" href="style">
 </head>
 <body>
     <header id="inicio">
@@ -14,19 +14,19 @@
         <h2>Registrate</h2>
         <p id="mensajeError" style="color: red;"></p>
         <form action="/registrar" method="post" id = "registrar">
-          <p><input type="text"        id="user"   name="user"     placeholder="usuario"       required></p>
-          <p><input type="password"    id="passwd" name="passwd"   placeholder="contraseña"    required></p>
-          <p><input type="password"    id="cpasswd" name="cpasswd"   placeholder="confirmar contraseña"    required></p>
-          <p><button type="submit">crear cuenta</button></p>
+          <p><input     type="text"        id="user"   name="user"      placeholder="usuario"               required></p>
+          <p><input     type="password"    id="passwd" name="passwd"    placeholder="contraseña"            required></p>
+          <p><input     type="password"    id="cpasswd" name="cpasswd"  placeholder="confirmar contraseña"  required></p>
+          <p><button    type="submit">crear cuenta</button></p>
         </form>
-        <p>¿ya tienes cuenta? haz click <a href="http://192.168.2.128:3000/ingresar">aqui</a> para iniciar sesion</p>
+        <p>¿ya tienes cuenta? haz click <a href="ingresar">aqui</a> para iniciar sesion</p>
     
     </form>
     </article>
     <footer>
         <nav>
             <a href="" onclick="alert('contactame esta')">¡Contactenos!</a>
-            <a href="http://192.168.2.128:3000/#inicio">volver al inicio</a>
+            <a href="/">volver al inicio</a>
         </nav>
         <p>CoppyWrite 2027</p>
     </footer>
@@ -38,12 +38,10 @@
             const user = document.getElementById('user').value;
             const passwd = document.getElementById('passwd').value;
             const cpasswd = document.getElementById("cpasswd").value
+
             if(cpasswd != passwd){
                 document.getElementById("mensajeError").innerHTML = "Error al crear la cuenta: las contraseñas no coinciden"
-            }
-            else 
-            {
-
+            } else {
             fetch('/registrar', {
                 method: 'POST',
                 headers: {
@@ -53,19 +51,20 @@
             })
                 .then(response => {
                     if (response.ok) {
+                        localStorage.setItem('username', user)
                         return response.json();
                     } else {
                         throw new Error('Error al crear la cuenta');
                     }
-                })
-                .then(data => {
-                    // Redirige a la URL especificada en la respuesta en caso de éxito
-                    window.location.href = data.redireccion;
-                })
+            })
+                .then(data =>{
+                    if(data.redireccion){ 
+                window.location.href = "/"
+            }})
                 .catch(error => {
                     // Muestra un mensaje de error en el div
-                    document.getElementById('mensajeError').innerText = 'Error: Nombre de usuario o contraseña incorrectos';
-                });
+                    document.getElementById('mensajeError').innerText = "Error: el usuario ya existe";
+            });
         }});
     </script>
 </body>

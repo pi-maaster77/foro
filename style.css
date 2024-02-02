@@ -35,9 +35,9 @@ body{
     padding: 5px;
     transition: box-shadow 0.3s ease;
     border: #ccc 1px;
-} article:hover{
+} article:hover {
     box-shadow: 0px 1px 7px 2px #aaa;
-} h2{
+} article h2 {
     padding: 0px 0 0px 30px;
     text-decoration: underline;
 } article p {
@@ -69,4 +69,24 @@ body{
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+} .custom-checkbox {
+    display: none; /* Oculta el checkbox predeterminado */
+} .checkbox-label {
+    width: 20px; /* Ancho deseado para la casilla personalizada */
+    height: 20px; /* Alto deseado para la casilla personalizada */
+    background: url('/imagen/unliked') no-repeat; /* Imagen para el estado no marcado */
+    background-size: cover;
+    cursor: pointer;
+    display: inline-block;
+} .custom-checkbox:checked + .checkbox-label {
+    background: url('/imagen/liked') no-repeat; /* Imagen para el estado marcado */
+    background-size: cover;
+} .custom-checkbox:disabled + .checkbox-label {
+    background: url('/imagen/disabled') no-repeat; /* Imagen para el estado marcado */
+    background-size: cover;
+} 
+ .likes {
+    margin-left: 25px;
+    margin-bottom: 25px;
+    font-size: 20px;
 }
