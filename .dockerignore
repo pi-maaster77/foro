@@ -1,6 +1,9 @@
 node_modules
 .gitignore
 .github
+.git
+.env
+.vscode
 example.env
 README.MD
 database.sql

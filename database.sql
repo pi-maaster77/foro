@@ -2,7 +2,7 @@ CREATE DATABASE foro;
 USE foro;
 CREATE TABLE articulos(  
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'id',
-    create_time DATETIME COMMENT 'fecha de creacion',
+    creacion DATETIME COMMENT 'fecha de creacion',
     nombre VARCHAR(16),
     contenido VARCHAR(255),
     autor VARCHAR(16),

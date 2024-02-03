@@ -1,21 +1,20 @@
 // importar librerias
 
-require("dotenv/config");
 const express = require("express");
 const path = require("path");
 const mysql = require('mysql2');
 const fs = require("fs").promises
 
-// definir constantes 
-const ip    = process.env.ip;                            
-const port  = process.env.port;                           
+// definir constantes                         
+const port  = process.env.PORT_SERVER;                           
 const app   = express();
 
 const connection = mysql.createConnection({
-    host: ip,
-    user: process.env.user,
-    password: process.env.password,
-    database: process.env.database,
+    host: process.env.IP_DB,
+    user: process.env.USER_DB,
+    password: process.env.PASSWORD_DB,
+    database: process.env.DB,
+    port: process.env.PORT_DB
 });
 
 ordenar = (a , b) => b.likes - a.likes;
@@ -158,5 +157,5 @@ app.post("/likes", async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`iniciando servidor en http://${ip}:${port}`);
+    console.log(`el servidor esta en escucha${port}`);
 });
