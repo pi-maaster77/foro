@@ -1,5 +1,6 @@
 CREATE DATABASE foro;
 USE foro;
+CREATE USER 'foro'@'localhost' IDENTIFIED BY '123456';
 CREATE TABLE articulos(  
     id int NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'id',
     creacion DATETIME COMMENT 'fecha de creacion',

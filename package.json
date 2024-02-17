@@ -1,18 +1,31 @@
 {
-  "name": "testeo",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "foro",
+  "version": "24.2.16",
+  "description": "un foro. no le busques la vuelta",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "testear"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pi-maaster77/foro.git"
+  },
+  "keywords": [
+    "forum",
+    "node",
+    "express",
+    "javascrypt",
+    "docker"
+  ],
   "author": "pi",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pi-maaster77/foro/issues"
+  },
+  "homepage": "https://github.com/pi-maaster77/foro#readme",
   "dependencies": {
-    "dotenv": "^16.4.1",
+    "dotenv": "^16.4.4",
     "express": "^4.18.2",
-    "express-session": "^1.18.0",
-    "mysql2": "^3.9.0"
+    "mysql2": "^3.9.1"
   }
 }

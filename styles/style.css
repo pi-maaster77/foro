@@ -1,0 +1,95 @@
+body{
+
+    min-height: 100vh;
+    margin:0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(231, 229, 198);
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+} header{
+    text-align: center;
+    color: rgb(255, 255, 255);
+    background: darkslategray;
+    padding: 50px;
+    text-shadow: 0px 0px 100px 1px;
+} header nav {
+    margin: 0;
+    padding: 0;
+    float: right;
+} header h1 {
+    font-size: 42px;
+    margin: 0;
+} img {
+    display: block;
+    height: auto;
+    width: 95%;
+    margin:2.5%;
+    border-radius: 20px;
+    margin-bottom: 20px;
+} article {
+    background-color: white;
+    margin: 20px auto;
+    border-radius: 20px;
+    width: 75%;
+    padding: 5px;
+    transition: box-shadow 0.3s ease;
+    border: #ccc 1px;
+} article:hover {
+    box-shadow: 0px 1px 7px 2px #aaa;
+} article h2 {
+    padding: 0px 0 0px 30px;
+    text-decoration: underline;
+} article p {
+    padding: 0 25px 0 25px ;
+    text-align: justify;
+} footer {
+    margin-top:auto;
+    height: 100px;
+    background-color: cornflowerblue;
+} footer a {
+    transition: color 0.4s ease;
+    color: black;
+    text-decoration: none;
+} footer nav {
+    float: right;
+    background-color: cornflowerblue;
+    padding-top: 40px;
+    padding-right: 20px;
+
+} footer p {
+    margin: 0;
+    padding-top: 40px;
+    padding-left: 20px;
+} footer a:hover {
+    color:rgb(82, 134, 130)
+} form {
+    margin: 0px 5px 5px 5px ;
+} form textarea{
+    resize: none;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+} .custom-checkbox {
+    display: none; /* Oculta el checkbox predeterminado */
+} .checkbox-label {
+    width: 20px; /* Ancho deseado para la casilla personalizada */
+    height: 20px; /* Alto deseado para la casilla personalizada */
+    background: url('/assets/unliked') no-repeat; /* Imagen para el estado no marcado */
+    background-size: cover;
+    cursor: pointer;
+    display: inline-block;
+} .custom-checkbox:checked + .checkbox-label {
+    background: url('/assets/liked') no-repeat; /* Imagen para el estado marcado */
+    background-size: cover;
+} .custom-checkbox:disabled + .checkbox-label {
+    background: url('/assets/disabled') no-repeat; /* Imagen para el estado deshabilitado*/
+    background-size: cover;
+} 
+ .likes {
+    margin-left: 25px;
+    margin-bottom: 25px;
+    font-size: 20px;
+}

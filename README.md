@@ -5,7 +5,7 @@ este es mi proyecto para aprender tecnologias que se usan en la web. y de paso, 
 
 ## tecnologias usadas 
 
-- javascrypt
+- javascript
 - html
 - css
 - node.js

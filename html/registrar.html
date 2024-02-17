@@ -30,42 +30,6 @@
         </nav>
         <p>CoppyWrite 2027</p>
     </footer>
-    <script>
-
-        document.getElementById('registrar').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const user = document.getElementById('user').value;
-            const passwd = document.getElementById('passwd').value;
-            const cpasswd = document.getElementById("cpasswd").value
-
-            if(cpasswd != passwd){
-                document.getElementById("mensajeError").innerHTML = "Error al crear la cuenta: las contraseñas no coinciden"
-            } else {
-            fetch('/registrar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ user, passwd })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        localStorage.setItem('username', user)
-                        return response.json();
-                    } else {
-                        throw new Error('Error al crear la cuenta');
-                    }
-            })
-                .then(data =>{
-                    if(data.redireccion){ 
-                window.location.href = "/"
-            }})
-                .catch(error => {
-                    // Muestra un mensaje de error en el div
-                    document.getElementById('mensajeError').innerText = "Error: el usuario ya existe";
-            });
-        }});
-    </script>
+    <script src="script/registrar"></script>
 </body>
 </html>

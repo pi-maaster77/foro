@@ -36,27 +36,7 @@
         </nav>
         <p>CoppyWrite 2027</p>
     </footer>
-    <script src="/login"></script>
-    <script>
-      document.getElementById('crear').addEventListener('submit', function (event) {
-        event.preventDefault();          
-        respuesta = {
-          nombre : document.getElementById('titulo').value,
-          contenido : document.getElementById('contenido').value,
-          imagenes : document.getElementById('imagen').value,
-          autor : localStorage.getItem("username")
-        };
-        fetch("/crear", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(respuesta)
-          })
-          .then(response => response.json())
-          .then(window.location.href = "/")
-          .catch(error => console.error('Error al enviar la respuesta:', error));
-      });
-    </script>
+    <script src="script/login"></script>
+    <script src="script/crear"></script>
 </body>
 </html>

@@ -30,41 +30,6 @@
         </nav>
         <p>CoppyWrite 2027</p>
     </footer>
-    <script>
-        function guardarUsuario(nombreUsuario) {
-            localStorage.setItem('username', nombreUsuario)
-        }
-
-        document.getElementById('ingresar').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const user = document.getElementById('user').value;
-            const passwd = document.getElementById('passwd').value;
-
-            fetch('/ingresar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ user, passwd })
-            })
-                .then(response => {
-                    if (response.ok) {
-                        guardarUsuario(user)
-                        return response.json();
-                    } else {
-                        throw new Error('Error al procesar el formulario');
-                    }
-                })
-                .then(data =>{
-                    if(data.redireccion){ 
-                window.location.href = "/"
-            }})
-                .catch(error => {
-                    // Muestra un mensaje de error en el div
-                    document.getElementById('mensajeError').innerText = 'Error: Nombre de usuario o contraseña incorrectos';
-                });
-        });
-    </script>
+    <script src="script/ingresar"></script>
 </body>
 </html>

@@ -4,6 +4,5 @@ node_modules
 .git
 .env
 .vscode
-example.env
 README.MD
 database.sql
