@@ -16,5 +16,8 @@ COPY . .
 # Expone el puerto en el que la aplicación se ejecutará
 EXPOSE 3000
 
+ENV IP_DB="172.17.0.2"
+
+
 # Comando para ejecutar la aplicación
 CMD ["node", "."]

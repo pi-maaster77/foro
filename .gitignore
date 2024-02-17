@@ -1,3 +1,5 @@
 package-lock.json
 likes/*
 .env
+node_modules
+.vscode
