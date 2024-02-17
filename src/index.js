@@ -24,7 +24,7 @@ const connection = mysql.createConnection({
     database: process.env.DB || "foro",
     port: process.env.PORT_DB || 3306
 }); //conectarse con la base de datos
-const port  = process.env.PORT_SERVER;  
+const port  = process.env.PORT_SERVER || 3000;  
 ordenar = (a , b) => b.likes - a.likes;
 /* 
     esta funcion define como se ordenaran los articulos. Se pueden usar los siguientes parametros: 
